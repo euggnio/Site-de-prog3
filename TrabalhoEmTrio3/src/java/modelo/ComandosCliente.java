@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package codigo;
+package modelo;
 
+import util.conexao;
 import modelo.Cliente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +19,8 @@ import java.util.logging.Logger;
  * @author eugen
  */
 public class ComandosCliente {
-    static String lastResult;
-    static ArrayList<Cliente> listaDeCliente = new ArrayList<>();
+    public static String lastResult;
+    public static ArrayList<Cliente> listaDeCliente = new ArrayList<>();
 
     public static String lastResesult() {
         return lastResult;
@@ -47,16 +48,14 @@ public class ComandosCliente {
         pr.setString(12, cidade);
         pr.setString(13, estado);
         
-        try {
+
             pr.executeUpdate();
-            lastResult = "true";
+            lastResult = "Inserir cliente";
             pr.close();
             conexao.sairBanco();
-        } catch (SQLException e) {
-            pr.close();
-            conexao.sairBanco();
-            lastResult = "False" + e;
-        }
+
+
+
         
         
     }
@@ -80,16 +79,12 @@ public class ComandosCliente {
         pr.setString(13, estado);
         pr.setString(14, id);
         
-                try {
+
             pr.executeUpdate();
-            lastResult = "true";
+            lastResult = "Atualizar Cliente";
             pr.close();
             conexao.sairBanco();
-        } catch (SQLException e) {
-            pr.close();
-            conexao.sairBanco();
-            lastResult = "False" + e;
-        }
+
     }
     
     public static void procurarCliente(String busca) throws SQLException, ClassNotFoundException{
@@ -133,6 +128,46 @@ public class ComandosCliente {
         }
     }
     
+     public static void procurarClienteId(String busca) throws SQLException, ClassNotFoundException{
+        try{
+        String sql = "select * from clientes"
+                + " where ID = "+ busca +";";
+       
+        PreparedStatement pr = conexao.conectarBanco().prepareStatement(sql);
+       
+            
+            ResultSet rs = pr.executeQuery(sql);
+            while (rs.next()) {
+            Cliente cliente = new Cliente(
+                    Integer.parseInt(rs.getString("ID")),
+                    rs.getString("CPF"),
+                    rs.getString("RG"),
+                    rs.getString("Nome"),
+                    rs.getString("Orgao_emissor"),
+                    rs.getString("Data_nascimento"),
+                    rs.getString("Email"),
+                    rs.getString("Whats"),
+                    rs.getString("Telefone"),
+                    rs.getString("Logradouro"),
+                    rs.getString("Numero"),
+                    rs.getString("Bairro"),
+                    rs.getString("Cidade"),
+                    rs.getString("Estado")
+                    
+            );
+            lastResult = cliente.toString();
+            listaDeCliente.add(cliente);
+           
+        }
+            
+            pr.close();
+            rs.close();
+            conexao.sairBanco();
+        }
+        catch(SQLException ex){
+            lastResult = "False" + ex;
+        }}
+    
     public static void excluirCliente(int id) throws ClassNotFoundException, SQLException{
                     String sql = "delete from clientes where id=" + id + ";";
             PreparedStatement pr = conexao.conectarBanco().prepareStatement(sql);
@@ -151,5 +186,3 @@ public class ComandosCliente {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
-    
-

@@ -15,19 +15,7 @@
 </head>
 
 <body>
-    <div class="header">
-      <div class="banner"></div>
-      <div class="menu">
-        <ul class="menu">
-          <li><a class="menu_item" href="index.html">HOME</a></li>
-          <li><a class="menu_item" href="usuarios.html">USUÁRIOS</a></li>
-          <li><a class="menu_item" href="clientes.html">CLIENTES</a></li>
-          <li><a class="menu_item" href="produtos.html">PRODUTOS</a></li>
-          <li><a class="menu_item" href="pedidos.html">PEDIDOS</a></li>
-        </ul>
-      </div>
-      <div class="banner"></div>
-    </div>
+    <%@include file="header.jsp" %>
 
     <h1 class="conteudo_title">CONFIRMAÇÃO</h1>
 

@@ -8,6 +8,8 @@
 <%@page import="modelo.Usuario" %>
 <!DOCTYPE html>
 <html>
+    
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Coala's Pizzas</title>
@@ -15,20 +17,7 @@
         <link href="style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body onload="limparForm()">
-        
-        <div class="header">
-            <div class="banner"></div>
-            <div class="menu">
-                <ul class="menu">
-                    <li><a class="menu_item" href="index.html">HOME</a></li>
-                    <li><a class="menu_item" href="usuarios.html">USUÁRIOS</a></li>
-                    <li><a class="menu_item" href="clientes.html">CLIENTES</a></li>
-                    <li><a class="menu_item" href="produtos.html">PRODUTOS</a></li>
-                    <li><a class="menu_item" href="pedidos.html">PEDIDOS</a></li>
-                </ul>
-            </div>
-            <div class="banner"></div>
-        </div>
+        <%@include  file="header.jsp" %>
         
         <div class="conteudo">
             <h1 class="conteudo_title">Cadastro Usuário</h1>
@@ -36,18 +25,20 @@
                 <%
                     Usuario user = (Usuario) request.getAttribute("usuario");
                     String opc = "atualizar";
+                    String readornot = "readonly";
                     if (user == null) {
                     user = new Usuario();
                     opc = "inserir";
+                    readornot = "required";
                 }
                 %>
                 <input type="hidden" name="opc" value="<%= opc %>">
                 <h1><%= opc%></h1>
                 <fieldset>
-                    <legend>Dados do usuario</legend>
+                    <legend>Dados do usuário</legend>
                     <div class="formulario__campos">
                         <label class="formulario__label" for="cpf">CPF:           
-                        <input class="input-campos" type="text" name="cpf" id="cpf" maxlength="11" value="<%= user.getCpf() %>" required/>             
+                        <input class="input-campos" type="text" name="cpf" id="cpf" maxlength="11" value="<%= user.getCpf() %>" <%= readornot %>/>             
                         </label> 
                         <label class="formulario__label" for="nome">Nome:
                         <input class="input-campos" type="text" id="nome" name="nome" value="<%= user.getNome() %>" required/>

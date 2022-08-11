@@ -20,8 +20,8 @@
         <div class="conteudo">
 
 
-            <h1>Cadastro de clientes:</h1>
-            <form class="formulario" id="formulario" method="post" action="clienteOp" >
+           <h1 class="conteudo_title"> Formulario Cliente</h1>
+            <form class="formulario" id="formulario" method="post" action="acoesCliente" >
                 
                 
                     <%
@@ -32,70 +32,63 @@
                 opc = "inserir";
             }
                     %>
+                    <input type="hidden" name="id" value="<%=cli.getId()%>">
                     <input type="hidden" name="opc" value="<%= opc %>">
-                    <input type="number" name="id" value="<%=cli.getId()%>">
-                    <h1><%= opc%></h1>
                 <fieldset>
                     <legend>Dados do cliente</legend>
-                    <label for="cpf">CPF:</label>
-                    <br>
-                    <input type="text" name="cpf" id="cpf" maxlength="11" value="<%= cli.getCpf() %>" value="<%= cli.getCpf() %>" required/>
-                    <br>
-                    <label for="rg" >RG:</label>
-                    <br>
-                    <input type="text" id="rg" name="rg"  value="<%= cli.getRg() %>" required/>
-                    <br>
-                    <label for="nome">Nome:</label>
-                    <br>
-                    <input type="text" id="nome" name="nome" value="<%= cli.getNome() %>" required/>
-                    <br>
-                    <label for="orgao_emissor">Orgão emissor RG:</label>
-                    <br>
-                    <input type="text" id="orgao_emissor" name="orgao_emissor" value="<%= cli.getOrgao_emissor() %>" required/>
-                    <br>
-                    <label for="data_nascimento">Data de nascimento: </label>
-                    <br>
-                    <input type="date" id="data_nascimento" name="data_nascimento" value="<%= cli.getDatanascimento() %>" required/>
-                    <br>
-                    <label for="email">E-mail:</label>
-                    <br>
-                    <input type="text" id="email" name="email" value="<%= cli.getEmail() %>" required/>
-                    <br>
-                    <label for="whats">whats</label>
-                    <br>
-                    <input type="text" id="whats" name="whats" maxlength="4" value="<%= cli.getWhats() %>" required/>
-                    <br>
-                    <label for="telefone">Telefone</label>
-                    <br>
-                    <input type="text" id="telefone" name="telefone" value="<%= cli.getTelefone() %>" required/>
-                    <br>
-                    <label for="logradouro">logradouro</label>
-                    <br>
-                    <input type="text" id="logradouro" name="logradouro" value="<%= cli.getLogradouro() %>" required/>
-                    <br>   
-                    <label for="numero">numero</label>
-                    <br>
-                    <input type="text" id="numero" name="numero" value="<%= cli.getNumero() %>" required/>
-                    <br> 
-                    <label for="bairro">bairro</label>
-                    <br>
-                    <input type="text" id="bairro" name="bairro" value="<%= cli.getBairro() %>" required/>
-                    <br> 
-                    <label for="cidade">cidade</label>
-                    <br>
-                    <input type="text" id="cidade" name="cidade" value="<%= cli.getCidade() %>" required/>
-                    <br> 
-                    <label for="estado">Estado:</label>
-                    <br>
-                    <input type="text" id="estado" name="estado" maxlength="2"  value="<%= cli.getEstado() %>" required/>
-                    <br> 
+                    <div class="formulario__campos">
+                        <label class="formulario__label" for="cpf">CPF
+                         <input class="input-campos" type="text" name="cpf" id="cpf" maxlength="11" value="<%= cli.getCpf() %>" value="<%= cli.getCpf() %>" required/></label>
+                         
+                        <label class="formulario__label" for="rg" >RG
+                         <input class="input-campos" type="text" id="rg" name="rg"  value="<%= cli.getRg() %>" required/></label>
+                    </div>
+                   
+                    <div class="formulario__campos">
+                    <label class="formulario__label" for="nome">Nome:
+                    <input class="input-campos" type="text" id="nome" name="nome" value="<%= cli.getNome() %>" required/></label>
+                    <label class="formulario__label" for="orgao_emissor">Orgão emissor RG
+                    <input class="input-campos" type="text" id="orgao_emissor" name="orgao_emissor" value="<%= cli.getOrgao_emissor() %>" required/></label>
+                    </div>
+                        
+                    <div class="formulario__campos">
+                    <label class="formulario__label" for="data_nascimento">Data de nascimento
+                    <input class="input-campos" type="date" id="data_nascimento" name="data_nascimento" value="<%= cli.getDatanascimento() %>" required/></label>
+                    <label class="formulario__label" for="email">E-mail
+                    <input class="input-campos" type="text" id="email" name="email" value="<%= cli.getEmail() %>" required/></label>
+                    </div><!-- comment -->
+                    
+                    <div class="formulario__campos">
+                    <label class="formulario__label" for="whats">whats
+                    <input class="input-campos" type="text" id="whats" name="whats" maxlength="4" value="<%= cli.getWhats() %>" required/></label>
+                    <label class="formulario__label" for="telefone">Telefone
+                    <input class="input-campos" type="text" id="telefone" name="telefone" value="<%= cli.getTelefone() %>" required/></label>
+                    </div>
+        
+                        <legend>Endereço</legend>
+                        <div class="formulario__campos">
+                    <label class="formulario__label" for="logradouro">Logradouro
+                    <input class="input-campos" type="text" id="logradouro" name="logradouro" value="<%= cli.getLogradouro() %>" required/></label>   
+                    <label class="formulario__label" for="numero">Número
+                    <input class="input-campos" type="text" id="numero" name="numero" value="<%= cli.getNumero() %>" required/></label> 
+                        </div>
+                        <div class="formulario__campos">
+                    <label class="formulario__label" for="bairro">bairro
+                    <input class="input-campos" type="text" id="bairro" name="bairro" value="<%= cli.getBairro() %>" required/></label> 
+                        
+                    <label class="formulario__label" for="cidade">Cidade
+                    <input class="input-campos" type="text" id="cidade" name="cidade" value="<%= cli.getCidade() %>" required/></label> 
+                    <label class="formulario__label" for="estado">Estado (SIGLA)
+                    <input class="input-campos" type="text" id="estado" name="estado" maxlength="2"  value="<%= cli.getEstado() %>" required/></label> 
+                        </div>
+                    
                 
-                <input type="submit" value="Cadastrar" name="cadastrar" />
-                <input type="reset" value="Limpar" name="limpar"/>
-                
+                <input class="inserir" type="submit" value="Cadastrar" name="cadastrar" />
+                <input class="inserir" type="reset" value="Limpar" name="limpar"/>
+
                 </fieldset>
             </form>
-                     <a href="buscarClientes.jsp"><button> VOLTAR</button> </a>
+                     <button class="voltar" onclick="window.history.go(-1)"> VOLTAR</button>
         </div>
     </body>
 

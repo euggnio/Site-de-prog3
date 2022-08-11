@@ -9,7 +9,10 @@ a{
   text-decoration: none;
 }
 
-
+.login{
+    width: 20%;
+    margin-left: 40%;
+}
 
 .header{
   display: inline-flex;
@@ -181,6 +184,16 @@ button {
 }
 
 .inserir{
+  background-color: #4784B3;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px 5px;
+  cursor: pointer;
+  border-radius: 5px;
   color:#FDFF66;
 }
 

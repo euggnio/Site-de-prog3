@@ -1,0 +1,57 @@
+<html>
+
+<head>
+  <title>Coala's Pizzas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="header">
+    <div class="banner"></div>
+    <div class="menu">
+      <ul class="menu">
+        <li><a class="menu_item" href="index.html">HOME</a></li>
+        <li><a class="menu_item" href="usuarios.html">USUÁRIOS</a></li>
+        <li><a class="menu_item" href="clientes.html">CLIENTES</a></li>
+        <li><a class="menu_item" href="produtos.html">PRODUTOS</a></li>
+        <li><a class="menu_item" href="pedidos.html">PEDIDOS</a></li>
+      </ul>
+    </div>
+    <div class="banner"></div>
+  </div>
+
+  <div class="conteudo">
+    <h1 class="conteudo_title">Cadastro Produtos</h1>
+    <form class="formulario" action="" method="post">
+      <fieldset>
+        <legend>Dados de Identificação</legend>
+
+        <div class="formulario__campos">
+          <label class="formulario__label" for="nome">Nome:
+            <input type="text" name="nome" id="nome" style="width: 80%;">
+          </label>
+          <label class="formulario__label" for="dataNascimento">Descrição:
+            <input type="text" name="dataNascimento" id="dataNascimento" style="width: 80%;">
+          </label>
+
+        </div>
+        <div class="formulario__campos">
+          <label class="formulario__label" for="cpf">Unidades:
+            <input type="text" name="cpf" id="cpf" style="width: 80%;">
+          </label>
+          <label class="formulario__label" for="rg">Preço Unitário:
+            <input type="text" name="rg" id="rg" style="width: 80%;">
+          </label>
+        </div>
+
+        <button type="submit"><a class="menu_item" href="processamento.html">Salvar</a></button>
+        <button type="reset"><a class="menu_item" href="produtos.html">Cancelar</a></button>
+
+      </fieldset>
+    </form>
+  </div>
+</body>
+
+</html>

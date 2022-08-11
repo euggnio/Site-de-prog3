@@ -1,9 +1,11 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package codigo;
 
+import modelo.ComandosCliente;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,71 +35,166 @@ public class acoesCliente extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException {
         String botaoClicado = request.getParameter("botaoClicado");      
         String[] idSelecionado = request.getParameterValues("selecionado");
+        String opc = request.getParameter("opc");
         String info = "";
+        
+        if(opc != null){
+                    if(opc.contains("atualizar")){
+            
+            try{
+                    ComandosCliente.atualizarCliente(
+                        request.getParameter("nome"),
+                        request.getParameter("data_nascimento"),
+                        request.getParameter("cpf"),
+                        request.getParameter("rg"),
+                        request.getParameter("orgao_emissor"),
+                        request.getParameter("email"),
+                        request.getParameter("telefone"),
+                        request.getParameter("whats"),
+                        request.getParameter("logradouro"),
+                        request.getParameter("numero"),
+                        request.getParameter("bairro"),
+                        request.getParameter("cidade"),
+                        request.getParameter("estado"),
+                        request.getParameter("id")
+                        );
+                    info = "<h1 style='color: green;'>Atualizado com sucesso.</h1> " + ComandosCliente.lastResult;
+                }       catch (SQLException ex) { 
+                           info = "<h1 style='color: red;'>Falha ao atualizar!! " + ex + " </h1> ";
+                        } catch (ClassNotFoundException ex) {
+                            info = "<h1 style='color: red;'>Falha ao atualizar!! " + ex + " </h1> ";
+                        }
+                request.setAttribute("voltar", "buscarClientes.jsp");
+                request.setAttribute("info", info);
+                RequestDispatcher despachar = request.getRequestDispatcher("resultado.jsp");
+                despachar.forward(request, response);
+            }
+            if(opc.contains("inserir")){
+          
+              try {
+                  ComandosCliente.adicionarCliente(
+                          request.getParameter("nome"),
+                          request.getParameter("data_nascimento"),
+                          request.getParameter("cpf"),
+                          request.getParameter("rg"),
+                          request.getParameter("orgao_emissor"),
+                          request.getParameter("email"),
+                          request.getParameter("telefone"),
+                          request.getParameter("whats"),
+                          request.getParameter("logradouro"),
+                          request.getParameter("numero"),
+                          request.getParameter("bairro"),
+                          request.getParameter("cidade"),
+                          request.getParameter("estado"));
+                  info = "<h1 style='color: green;'>Cliente inserido! </h1>";
+              } catch (ClassNotFoundException ex) {
+                  info = "<h1 style='color: red;'>Erro ao inserir! " +ex + "</h1>";
+              } catch (SQLException ex) {
+               info = "<h1 style='color: red;'>Erro ao inserir! " +ex + "</h1>";
+            }
+
+
+                    
+                request.setAttribute("voltar", "buscarClientes.jsp");
+                request.setAttribute("info", info);
+                RequestDispatcher despachar = request.getRequestDispatcher("resultado.jsp");
+                despachar.forward(request, response);
+            }
+        }
+        else{
+        
         
         if(botaoClicado.contains("inserir")){
 
-            RequestDispatcher despachar = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher despachar = request.getRequestDispatcher("cadastroCliente.jsp");
             despachar.forward(request, response);
         }
             
         //se for exclusão call excluirCliente por ID;
         else if(botaoClicado.contains("excluir")){
             if(idSelecionado == null){
-                info = "Selecione um cliente ou mais para excluir!!!";
+                 info = "<h1 style='color: red;'>Selecione um ou mais Clientes para excluir. </h1>";
             }
             else{
                 if(idSelecionado.length == 1){
-                    ComandosCliente.excluirCliente(Integer.parseInt(idSelecionado[0]));
-                     info ="Clientes excluidos com sucesso!!!";
+                    try {
+                        ComandosCliente.excluirCliente(Integer.parseInt(idSelecionado[0]));
+                        info = "<h1 style='color: green;'> Exclusão bem sucedida! </h1> ";
+                    } catch (ClassNotFoundException ex) {
+                       info = "<h1 style='color: red;'> Exclusão com erro: " +ex+" </h1> ";
+                    } catch (SQLException ex) {
+                        info = "<h1 style='color: red;'> Exclusão com erro: " +ex+" </h1> ";
+                    }
                 }
                 if(idSelecionado.length >= 2){
                     for (int i = 0; i < idSelecionado.length; i++) {
-                         info ="Clientes excluidos com sucesso!!!";
-                        ComandosCliente.excluirCliente(Integer.parseInt(idSelecionado[i]));
+                         
+                        try {
+                            ComandosCliente.excluirCliente(Integer.parseInt(idSelecionado[i]));
+                       info = "<h1 style='color: green;'> Exclusão bem sucedida! </h1> ";
+                    } catch (ClassNotFoundException ex) {
+                       info = "<h1 style='color: red;'> Exclusão com erro: " +ex+" </h1> ";
+                    } catch (SQLException ex) {
+                        info = "<h1 style='color: red;'> Exclusão com erro: " +ex+" </h1> ";
+                    }
 
                     }
+                    info = "<h1 style='color: green;'> Exclusão bem sucedida! </h1> ";
             }
             }
             
-            request.setAttribute("Info", info);
+            request.setAttribute("info", info);
             request.setAttribute("lastResult", ComandosCliente.lastResult);
             RequestDispatcher despachar = request.getRequestDispatcher("buscarClientes.jsp");
             despachar.forward(request, response);
         }
         //se clica em atualizar manda pro index com o select
-        else if(botaoClicado.contains("atualizar")){
+        else if(botaoClicado.equals("atualizar")){
                             if(idSelecionado == null){
-                    info = "Selecione algum cliente para atualizar";
+                    info = "<h1 style='color: red;'>Selecione um Cliente para atualizar. </h1>";
                 }else{
             for (int i = 0 ; i < ComandosCliente.listaDeCliente.size(); i ++) {
                 if(idSelecionado.length > 1){
-                    info = "Selecione apenas 1 cliente para atualizar!!!";
+                    info = "<h1 style='color: red;'>Selecione apenas um Cliente para atualizar. </h1>";
                 }else{
-                if(Integer.parseInt(idSelecionado[0]) == ComandosCliente.listaDeCliente.get(0).getId()){
+                    try {
+                        ComandosCliente.listaDeCliente.clear();
+                        ComandosCliente.procurarClienteId(idSelecionado[0]);
+                        
+                        request.setAttribute("cliente", ComandosCliente.listaDeCliente.get(0));
+                        request.setAttribute("info", info);
+                        request.setAttribute("lastResult", ComandosCliente.lastResult);
+                        RequestDispatcher despachar = request.getRequestDispatcher("cadastroCliente.jsp");
+                        despachar.forward(request, response);
+                        
+                                } catch (ClassNotFoundException ex) {
+                                    info = "<h1 style='color: red;'>Falha ao atualizar!! " + ex + " </h1> ";
+                                } catch (SQLException ex) {
+                                    info = "<h1 style='color: red;'>Falha ao atualizar!! " + ex + " </h1> ";
+                                }
                     
-                    request.setAttribute("cliente", ComandosCliente.listaDeCliente.get(0));
-                    request.setAttribute("Info", info);
-                    request.setAttribute("lastResult", ComandosCliente.lastResult);
-                    RequestDispatcher despachar = request.getRequestDispatcher("index.jsp");
-                    despachar.forward(request, response);
-                  }
+                        request.setAttribute("info", info);
+                        request.setAttribute("lastResult", ComandosCliente.lastResult);
+                        RequestDispatcher despachar = request.getRequestDispatcher("buscarClientes.jsp");
+                        despachar.forward(request, response);
+                  
                 }
             }
         }
             //busca normal
-            request.setAttribute("Info", info);
+            request.setAttribute("info", info);
             request.setAttribute("lastResult", ComandosCliente.lastResult);
             RequestDispatcher despachar = request.getRequestDispatcher("buscarClientes.jsp");
             despachar.forward(request, response);
         }
-                    request.setAttribute("Info", info);
+                    request.setAttribute("info", info);
             request.setAttribute("lastResult", ComandosCliente.lastResult);
             RequestDispatcher despachar = request.getRequestDispatcher("buscarClientes.jsp");
             despachar.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -127,13 +224,9 @@ public class acoesCliente extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                         
-        try {
+
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(acoesCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(acoesCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     /**
@@ -147,3 +240,5 @@ public class acoesCliente extends HttpServlet {
     }// </editor-fold>
 
 }
+
+    

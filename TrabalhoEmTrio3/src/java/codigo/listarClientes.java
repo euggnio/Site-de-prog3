@@ -4,6 +4,7 @@
  */
 package codigo;
 
+import modelo.ComandosCliente;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +16,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import modelo.ComandosCliente;
 
 /**
  *

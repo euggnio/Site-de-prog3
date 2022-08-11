@@ -8,18 +8,33 @@ package modelo;
  *
  * @author eugen
  */
-public class Produtos {
-    
+public class Produto {
+    private int id;
     private String nome;
     private String descricao;
     private int unidade;
     private float preco_unitario;
 
-    public Produtos(String nome, String descricao, int unidade, float preco_unitario) {
+    public Produto(int id,String nome, String descricao, int unidade, float preco_unitario) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.unidade = unidade;
         this.preco_unitario = preco_unitario;
+    }
+    
+    public Produto(){
+        this.nome = "";
+        this.descricao = "";
+        
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {

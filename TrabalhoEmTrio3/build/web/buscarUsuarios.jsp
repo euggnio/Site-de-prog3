@@ -9,6 +9,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
+ 
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,7 +18,14 @@
         <link href="style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+         
          <%@include file="header.jsp" %>
+                    <%
+                if(sessao == null){
+            response.sendRedirect("logar.jsp");
+           
+        }
+        %>
         <div class="conteudo">
             <h1 class="conteudo_title">Usuários</h1>
         <form  class="formulario" action="acoesUsuario" method="post">
@@ -26,15 +35,16 @@
             <input class="filtrar" type="submit" name="buscar" id="buscar" value="Buscar">
         </form>
         <form class="formulario" action="acoesUsuario" method="post">
-                <input type="submit" name="botaoClicado" value="inserir">
-                <input type= submit name="botaoClicado" value="atualizar">
-                <input type= submit name="botaoClicado" value="excluir">
+                <input class="inserir" type="submit" name="botaoClicado" value="inserir">
+                <input class="inserir" type= submit name="botaoClicado" value="atualizar">
+                <input class="inserir" type= submit name="botaoClicado" value="excluir">
            
+                
+                
                 <%  
                     String info = "";
                     if(request.getAttribute("info") != null){info = (String) (request.getAttribute("info"));} %>
         <h1><%= info %></h1>
-        <h1>Lista de clientes:</h1>
 
              <table class="tabela_pesquisa">
                  <tr class="linhas_tabela_pesquisa" id="linha_primaria_pesquisa">
@@ -55,9 +65,9 @@
                       
                       for(int i=0; i < usu.size(); i++) {
                       %>
-                      <tr>
+                      <tr class="linhas_tabela_pesquisa" id="linha2">
                           <td class="tabela_coluna_pesquisa"><input type="checkbox" value="<%= usu.get(i).getCpf() %>" id="selecionado" name="selecionado"></td>
-                          <td class="tabela_coluna_pesquisa" ><%= usu.get(i).getCpf() %></td>
+                          <td class="tabela_coluna_pesquisa"><%= usu.get(i).getCpf() %></td>
                           <td class="tabela_coluna_pesquisa"><%= usu.get(i).getNome() %></td>
                           <td class="tabela_coluna_pesquisa"><%= usu.get(i).getData_nascimento() %></td>
                           <td class="tabela_coluna_pesquisa"><%= usu.get(i).getEmail() %></td>
